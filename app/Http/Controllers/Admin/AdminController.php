@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -35,6 +36,18 @@ class AdminController extends Controller
             ->get();
         return view('admin.createadmin')
         ->with('list', $list);
+    }
+
+    public function destroy($id)
+    {
+     
+        $userrow = User::find($id);
+
+        $userrow->delete(); 
+
+        return redirect('/create');
+
+
     }
 
 }

@@ -34,6 +34,7 @@ Route::middleware(['role:superadmin'])->group(function () {
     Route::get('/submit', [App\Http\Controllers\Lect\LectController::class, 'submitProposal'])->name('spsubmit');
     Route::get('/approve', [App\Http\Controllers\Admin\CourseController::class, 'course'])->name('spapprove');
     Route::get('/create', [App\Http\Controllers\Admin\AdminController::class, 'createAdmin'])->name('spcreate');
+    Route::get('/create/{id}', [App\Http\Controllers\Admin\AdminController::class, 'destroy'])->name('user.destroy');
 });
 
 Route::middleware(['role:admin'])->group(function () {

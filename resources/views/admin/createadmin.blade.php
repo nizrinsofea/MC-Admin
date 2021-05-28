@@ -38,6 +38,11 @@
                       <input type="password" class="form-control" value="{{$data->pwshow}}" id="{{$data->id}}" disabled>
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" onclick="showPassword({{$data->id}})" >Show</button>
+                        <a href="{{route('user.destroy',$data->id)}}" class="btn btn-danger">X</a>
+                            <form method="post" class="delete_form" action="{{route('user.destroy',$data->id)}}">
+                            @csrf                                
+                            @method('delete')
+                            </form>
                       </div>
                     </div>
                   </div>
