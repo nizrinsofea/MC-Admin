@@ -63,20 +63,28 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 # mc-admin
 
 composer install
+
 npm install
+
 php artisan key:generate
+
 php artisan migrate
+
 composer dump-autoload
+
 php artisan db:seed
 
 login credentials
 
 username: superadmin
+
 password: password
 
 username: admin
+
 password: password
 
 username: lecturer
+
 password: password
 
