@@ -21,6 +21,7 @@ class CreateProposalTable extends Migration
             $table->string('courseInfo', 255)->nullable();
             $table->string('courseCH', 255)->nullable();
             $table->string('courseOutline', 255)->nullable();
+            $table->string('category', 255)->nullable();
         });
     }
 

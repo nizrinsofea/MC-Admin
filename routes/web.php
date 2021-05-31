@@ -39,7 +39,12 @@ Route::middleware(['role:superadmin'])->group(function () {
 
 Route::middleware(['role:admin'])->group(function () {
     Route::get('/admin', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin');
-    Route::get('/admin/approve', [App\Http\Controllers\Admin\CourseController::class, 'course'])->name('approve');
+    Route::get('/admin/approve', function () {
+        $create = DB::table('proposal')
+                        ->select('courseCode','courseInfo','courseTitle','courseCH','category')
+                        ->get();
+        return view('admin.approveproposal', ['create' => $create]);
+    })->name('approve');
 });
 
 Route::middleware(['role:lecturer'])->group(function () {
