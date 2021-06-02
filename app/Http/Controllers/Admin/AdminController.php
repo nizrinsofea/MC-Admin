@@ -51,7 +51,7 @@ class AdminController extends Controller
     {
         $userrow = Course::find($id);
         $userrow->delete(); 
-        return Redirect::to('/approve')->with('success', true)->with('message','Course approved!');
+        return Redirect::to('/approve')->with('success', true)->with('message','Course rejected!');
     }
 
 }

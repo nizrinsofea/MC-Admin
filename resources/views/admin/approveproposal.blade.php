@@ -4,6 +4,14 @@
 <!-- Content Header (Page header) -->
 <div class="content-header">
       <div class="container-fluid">
+      @if(session()->has('message'))
+              <div class="alert alert-success">
+                  {{ session()->get('message') }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+            @endif
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1 class="m-0">Approve Proposal</h1>
@@ -39,13 +47,13 @@
             <td>{{ $data->credithr }}</td>
             <td>{{ $data->created_at }}</td>
             <td>
-            <form method="post" class="delete_form" action="{{route('course.destroy',$data->id)}}">
-                            @csrf                                
-                            @method('delete')
-              <button class="btn btn-primary"  onclick="location.href = 'http://localhost/moodle/webservice/rest/server.php?wstoken=5f7d2d57c2c16cd8165553156c00cc5c&wsfunction=core_course_create_courses&courses[0][fullname]={{ $data->coursetitle }}&courses[0][shortname]={{ $data->coursecode }}&courses[0][categoryid]={{ $data->category }}&courses[0][summary]={{ $data->courseinfo }}';" id="myButton" class="float-left submit-button" >Approve</button>
+              <button class="btn btn-primary"  onclick="window.open ( 'http://localhost/moodle/webservice/rest/server.php?wstoken=5f7d2d57c2c16cd8165553156c00cc5c&wsfunction=core_course_create_courses&courses[0][fullname]={{ $data->coursetitle }}&courses[0][shortname]={{ $data->coursecode }}&courses[0][categoryid]={{ $data->category }}&courses[0][summary]={{ $data->courseinfo }}');" id="myButton" class="float-left submit-button" >Approve</button>
                
-              <button class="btn btn-danger" type="submit">Reject</button>
-              </form>
+              <a href="{{route('course.destroy',$data->id)}}" class="btn btn-danger">Reject</a>
+                <form method="post" class="delete_form" action="{{route('course.destroy',$data->id)}}">
+                @csrf                                
+                @method('delete')
+                </form>
             </td>
         </tr>
         

@@ -42,7 +42,7 @@ Route::middleware(['role:superadmin'])->group(function () {
                         ->get();
         return view('admin.approveproposal', ['create' => $create]);
     })->name('spapprove');
-    Route::delete('/approve/{id}', [App\Http\Controllers\Admin\AdminController::class, 'courseDestroy'])->name('course.destroy');
+    Route::get('/approve/{id}', [App\Http\Controllers\Admin\AdminController::class, 'courseDestroy'])->name('course.destroy');
 
     Route::get('/create', [App\Http\Controllers\Admin\AdminController::class, 'createAdmin'])->name('spcreate');
     Route::get('/create/{id}', [App\Http\Controllers\Admin\AdminController::class, 'userDestroy'])->name('user.destroy');
