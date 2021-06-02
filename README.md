@@ -60,7 +60,11 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# mc-admin
+## MC Admin
+
+Microcredentials - Moodle - MC Admin 
+
+# installation
 
 composer install
 
@@ -74,7 +78,10 @@ composer dump-autoload
 
 php artisan db:seed
 
-login credentials
+change moodle token in approveproposal.blade
+
+
+# login credentials
 
 username: superadmin
 
