@@ -271,7 +271,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           @endif
           @if (Auth::user()->role == 'lecturer')
           <li class="nav-item menu-open">
-            <a href="{{ route('lect') }}" class="nav-link">
+            <a href="{{ route('lecturer') }}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Lecturer

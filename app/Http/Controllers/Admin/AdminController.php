@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Models\Course;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
 {
@@ -38,16 +40,18 @@ class AdminController extends Controller
         ->with('list', $list);
     }
 
-    public function destroy($id)
+    public function userDestroy($id)
     {
-     
         $userrow = User::find($id);
-
         $userrow->delete(); 
+        return Redirect::to('/create')->with('success', true)->with('message','Admin deleted!');
+    }
 
-        return redirect('/create');
-
-
+    public function courseDestroy($id)
+    {
+        $userrow = Course::find($id);
+        $userrow->delete(); 
+        return Redirect::to('/approve')->with('success', true)->with('message','Course approved!');
     }
 
 }

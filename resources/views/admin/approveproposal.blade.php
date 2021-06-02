@@ -21,7 +21,7 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-      <table id="customers">
+      <table id="customers" class="table">
         <tr>
             <th>Course Title</th>
             <th>Course Code</th>
@@ -33,13 +33,19 @@
 
         @foreach($create as $key => $data)
         <tr>
-            <td>{{ $data->courseTitle }}</td>
-            <td>{{ $data->courseCode }}</td>
-            <td>{{ $data->courseInfo }}</td>
-            <td>{{ $data->courseCH }}</td>
+            <td>{{ $data->coursetitle }}</td>
+            <td>{{ $data->coursecode }}</td>
+            <td>{{ $data->courseinfo }}</td>
+            <td>{{ $data->credithr }}</td>
             <td>{{ $data->created_at }}</td>
             <td>
-              <button onclick="location.href = 'http://localhost/moodle/webservice/rest/server.php?wstoken=2c8b1a438395fa3ff1d3e4b295b22ef2&wsfunction=core_course_create_courses&courses[0][fullname]={{ $data->coursetitle }}&courses[0][shortname]={{ $data->coursecode }}&courses[0][categoryid]={{ $data->category }}&courses[0][summary]={{ $data->courseinfo }}';" id="myButton" class="float-left submit-button" >Approve</button>
+            <form method="post" class="delete_form" action="{{route('course.destroy',$data->id)}}">
+                            @csrf                                
+                            @method('delete')
+              <button class="btn btn-primary"  onclick="location.href = 'http://localhost/moodle/webservice/rest/server.php?wstoken=5f7d2d57c2c16cd8165553156c00cc5c&wsfunction=core_course_create_courses&courses[0][fullname]={{ $data->coursetitle }}&courses[0][shortname]={{ $data->coursecode }}&courses[0][categoryid]={{ $data->category }}&courses[0][summary]={{ $data->courseinfo }}';" id="myButton" class="float-left submit-button" >Approve</button>
+               
+              <button class="btn btn-danger" type="submit">Reject</button>
+              </form>
             </td>
         </tr>
         

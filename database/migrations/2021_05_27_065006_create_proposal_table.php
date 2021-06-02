@@ -16,11 +16,11 @@ class CreateProposalTable extends Migration
         Schema::create('proposal', function (Blueprint $table) {
             $table->id();
             $table->timestamp('created_at')->useCurrent();
-            $table->string('courseCode', 255)->nullable();
-            $table->string('courseTitle', 255)->nullable();
-            $table->string('courseInfo', 255)->nullable();
-            $table->string('courseCH', 255)->nullable();
-            $table->string('courseOutline', 255)->nullable();
+            $table->string('coursecode', 255)->nullable();
+            $table->string('coursetitle', 255)->nullable();
+            $table->string('courseinfo', 255)->nullable();
+            $table->integer('credithr');
+            $table->string('courseoutline', 255)->nullable();
             $table->string('category', 255)->nullable();
         });
     }

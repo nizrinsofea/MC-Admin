@@ -18,38 +18,54 @@ Route::get('/', function () {
 });
 
 Route::get('/home', function () {
-    if (Auth::user()->role == 'lecturer')
-        return redirect('/lecturer');
-    elseif (Auth::user()->role == 'superadmin')
-        return redirect('/home');
-    else
+    if (Auth::user()->role == 'admin')
         return redirect('/admin');
+    elseif (Auth::user()->role == 'lecturer')
+        return redirect('/lecturer');
+    else
+        return redirect('/home');
 });
 
 
 Auth::routes();
 
 Route::middleware(['role:superadmin'])->group(function () {
+
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    
     Route::get('/submit', [App\Http\Controllers\Lect\LectController::class, 'submitProposal'])->name('spsubmit');
-    Route::get('/approve', [App\Http\Controllers\Admin\CourseController::class, 'course'])->name('spapprove');
+    Route::post('/submit', [App\Http\Controllers\Lect\LectController::class, 'proposal']);
+
+    Route::get('/approve', function () {
+        $create = DB::table('proposal')
+                        ->select('id','coursecode','courseinfo','coursetitle','credithr','category','created_at')
+                        ->get();
+        return view('admin.approveproposal', ['create' => $create]);
+    })->name('spapprove');
+    Route::delete('/approve/{id}', [App\Http\Controllers\Admin\AdminController::class, 'courseDestroy'])->name('course.destroy');
+
     Route::get('/create', [App\Http\Controllers\Admin\AdminController::class, 'createAdmin'])->name('spcreate');
-    Route::get('/create/{id}', [App\Http\Controllers\Admin\AdminController::class, 'destroy'])->name('user.destroy');
+    Route::get('/create/{id}', [App\Http\Controllers\Admin\AdminController::class, 'userDestroy'])->name('user.destroy');
 });
 
 Route::middleware(['role:admin'])->group(function () {
+
     Route::get('/admin', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin');
+
     Route::get('/admin/approve', function () {
         $create = DB::table('proposal')
-                        ->select('courseCode','courseInfo','courseTitle','courseCH','category')
+                        ->select('id','coursecode','courseinfo','coursetitle','credithr','category','created_at')
                         ->get();
         return view('admin.approveproposal', ['create' => $create]);
     })->name('approve');
 });
 
 Route::middleware(['role:lecturer'])->group(function () {
-    Route::get('/lecturer', [App\Http\Controllers\Lect\LectController::class, 'index'])->name('lect');
+
+    Route::get('/lecturer', [App\Http\Controllers\Lect\LectController::class, 'index'])->name('lecturer');
+
     Route::get('/lecturer/submit', [App\Http\Controllers\Lect\LectController::class, 'submitProposal'])->name('submit');
+    Route::post('/lecturer/submit', [App\Http\Controllers\Lect\LectController::class, 'proposalLect']);
 });
 
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');

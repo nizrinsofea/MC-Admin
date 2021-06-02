@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Redirect;
 
 class RegisterController extends Controller
 {
@@ -52,7 +53,7 @@ class RegisterController extends Controller
         //$this->guard()->login($user);
 
         return $this->registered($request, $user)
-                        ?: redirect($this->redirectPath());
+                        ?: Redirect::to('/create')->with('success', true)->with('message','Admin created!');
     }
 
     /**
