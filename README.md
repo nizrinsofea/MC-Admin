@@ -70,6 +70,8 @@ composer install
 
 npm install
 
+change .env settings
+
 php artisan key:generate
 
 php artisan migrate
@@ -78,7 +80,6 @@ composer dump-autoload
 
 php artisan db:seed
 
-change moodle token in approveproposal.blade
 
 
 ## login credentials
