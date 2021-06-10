@@ -31,33 +31,35 @@ Auth::routes();
 
 Route::middleware(['role:superadmin'])->group(function () {
 
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/home', [App\Http\Controllers\Superadmin\HomeController::class, 'index'])->name('home');
     
-    Route::get('/submit', [App\Http\Controllers\Lect\LectController::class, 'submitProposal'])->name('spsubmit');
-    Route::post('/submit', [App\Http\Controllers\Lect\LectController::class, 'proposal']);
+    Route::get('/submit', [App\Http\Controllers\Lect\ProposalController::class, 'index'])->name('spsubmit');
+    Route::post('/submit', [App\Http\Controllers\Lect\ProposalController::class, 'store']);
 
-    Route::get('/approve', function () {
-        $create = DB::table('proposal')
-                        ->select('id','coursecode','courseinfo','coursetitle','credithr','category','created_at')
-                        ->get();
-        return view('admin.approveproposal', ['create' => $create]);
-    })->name('spapprove');
-    Route::get('/approve/{id}', [App\Http\Controllers\Admin\AdminController::class, 'courseDestroy'])->name('course.destroy');
+    Route::get('/approve', [App\Http\Controllers\Superadmin\ApproveController::class, 'proposalList'])->name('spapprove');
+    Route::get('/approve/{id}', [App\Http\Controllers\Superadmin\ApproveController::class, 'proposalDetails']);
 
-    Route::get('/create', [App\Http\Controllers\Admin\AdminController::class, 'createAdmin'])->name('spcreate');
-    Route::get('/create/{id}', [App\Http\Controllers\Admin\AdminController::class, 'userDestroy'])->name('user.destroy');
+    //Route::get('/approve/{id}', [App\Http\Controllers\Admin\AdminController::class, 'courseDestroy'])->name('course.destroy');
+
+    Route::get('/search', function () {
+        return view('superadmin.stafflist');
+    })->name('search');
+    Route::post('/search', [App\Http\Controllers\Superadmin\CreateAdminController::class, 'search']);
+
+    Route::get('/submitted', [App\Http\Controllers\Lect\SubmittedController::class, 'submitList'])->name('spsubmitted');
+    Route::get('/submitted/{id}', [App\Http\Controllers\Lect\SubmittedController::class, 'submitDetails']);
+    Route::post('/submitted/{id}', [App\Http\Controllers\Lect\SubmittedController::class, 'update'])->name('spupdate');
+    Route::delete('/submitted/{id}', [App\Http\Controllers\Lect\SubmittedController::class, 'destroy'])->name('spdestroy');
+
 });
 
 Route::middleware(['role:admin'])->group(function () {
 
     Route::get('/admin', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('admin');
 
-    Route::get('/admin/approve', function () {
-        $create = DB::table('proposal')
-                        ->select('id','coursecode','courseinfo','coursetitle','credithr','category','created_at')
-                        ->get();
-        return view('admin.approveproposal', ['create' => $create]);
-    })->name('approve');
+    Route::get('/admin/approve', [App\Http\Controllers\Superadmin\ApproveController::class, 'proposalList'])->name('approve');
+    Route::get('/admin/approve/{id}', [App\Http\Controllers\Superadmin\ApproveController::class, 'proposalDetails']);
+
 });
 
 Route::middleware(['role:lecturer'])->group(function () {
@@ -66,6 +68,12 @@ Route::middleware(['role:lecturer'])->group(function () {
 
     Route::get('/lecturer/submit', [App\Http\Controllers\Lect\LectController::class, 'submitProposal'])->name('submit');
     Route::post('/lecturer/submit', [App\Http\Controllers\Lect\LectController::class, 'proposalLect']);
+
+    Route::get('/proposal', [App\Http\Controllers\Lect\ProposalController::class, 'index'])->name('proposals.index');
+    
+    Route::get('/lecturer/submitted', [App\Http\Controllers\Lect\SubmittedController::class, 'submitList'])->name('submitted');
+    Route::get('/lecturer/submitted/{id}', [App\Http\Controllers\Lect\SubmittedController::class, 'submitDetails']);
+    Route::post('/lecturer/submitted/{id}', [App\Http\Controllers\Lect\ProposalController::class, 'update'])->name('update');
 });
 
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');

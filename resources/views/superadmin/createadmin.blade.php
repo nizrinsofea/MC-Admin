@@ -67,6 +67,7 @@
               <div class="card-header">
                 <h5 class="m-0">Add admin</h5>
               </div>
+            
               <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf

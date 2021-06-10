@@ -211,6 +211,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <a href="" class="nav-link">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p>
+                      Superadmin
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="{{ route('search') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Create Admin</p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item menu-open">
+                  <a href="" class="nav-link">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <p>
                       Admin
                       <i class="right fas fa-angle-left"></i>
                     </p>
@@ -220,12 +237,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <a href="{{ route('spapprove') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Approve Proposal</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="{{ route('spcreate') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Create Admin</p>
                       </a>
                     </li>
                   </ul>
@@ -243,6 +254,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <a href="{{ route('spsubmit') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Submit Proposal</p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="{{ route('spsubmitted') }}" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Submitted Proposals</p>
                       </a>
                     </li>
                     
@@ -283,6 +300,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a href="{{ route('submit') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Submit Proposal</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('submitted') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Submitted Proposals</p>
                 </a>
               </li>
               

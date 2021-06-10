@@ -31,22 +31,6 @@ class AdminController extends Controller
         return view('admin.approveproposal');
     }
 
-    public function createAdmin()
-    {
-        $list = DB::table('users')
-            ->select('users.username', 'users.pwshow', 'users.id')
-            ->get();
-        return view('admin.createadmin')
-        ->with('list', $list);
-    }
-
-    public function userDestroy($id)
-    {
-        $userrow = User::find($id);
-        $userrow->delete(); 
-        return Redirect::to('/create')->with('success', true)->with('message','Admin deleted!');
-    }
-
     public function courseDestroy($id)
     {
         $userrow = Course::find($id);
