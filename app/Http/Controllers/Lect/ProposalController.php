@@ -63,6 +63,15 @@ class ProposalController extends Controller
         return redirect()->route('spsubmit')->with('success', true)->with('message','Submission success!');
     }
 
+    public function lectStore(Request $request)
+    {
+        $input = $request->all();
+        $input['assessment'] = $request->input('assessment');
+        Proposal::create($input);
+
+        return redirect()->route('submit')->with('success', true)->with('message','Submission success!');
+    }
+
     public function update($id, Request $request)
     {
         $proposals = Proposal::findOrFail($id);
@@ -71,10 +80,6 @@ class ProposalController extends Controller
         $proposals->fill($input)->save();
         return redirect()->back()->with('success', true)->with('message','Proposal updated successfully!');
     }
-
-    public function createForm(){
-        return view('lect.proposal.stepthree');
-      }
 
     public function fileUpload(Request $req){
         $req->validate([

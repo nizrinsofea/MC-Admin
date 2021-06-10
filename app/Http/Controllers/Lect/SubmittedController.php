@@ -8,12 +8,14 @@ use App\Models\Proposal;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 
 class SubmittedController extends Controller
 {
     public function submitList() {
         $list = DB::table('proposals')
             ->select('id','coursetitle','created_at','created_by')
+            ->where('created_by','=', Auth::user()->username)
             ->get();
         return view('lect.submittedlist', ['list' => $list]);
     }
@@ -38,7 +40,14 @@ class SubmittedController extends Controller
     {
         $userrow = Proposal::find($id);
         $userrow->delete(); 
-        return Redirect::to('/submitted')->with('success', true)->with('message','Proposal deleted!');
+
+        if (Auth::user()->role == 'superadmin') {
+            return Redirect::to('/submitted')->with('success', true)->with('message','Proposal deleted!');
+        }
+        else {
+            return Redirect::to('/lecturer/submitted')->with('success', true)->with('message','Proposal deleted!');
+        }
+            
     }
     
 }

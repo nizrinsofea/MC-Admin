@@ -56,15 +56,25 @@
                     <td>{{ $data->created_at }}</td>
                     <td>Pending</td>
                     <td>
-                      
-                      <form method="post" class="delete_form" action="{{route('spdestroy',$data->id)}}">
+
+                        @if (Auth::user()->role == 'superadmin')  
+                          <form method="post" class="delete_form" action="{{route('spdestroy',$data->id)}}">
                             @csrf                                
                             @method('delete')
                             <a class="btn btn-outline-secondary" type="button" href="{{ route('spupdate', $data->id) }}" >Edit</a> 
-                        <button href="{{route('spdestroy',$data->id)}}" class="btn btn-danger" type="submit">Delete</button>
+                            <button href="{{route('spdestroy',$data->id)}}" class="btn btn-danger" type="submit">Delete</button>
                             
-                            </form>
-                            </td>
+                          </form>
+                        @else
+                          <form method="post" class="delete_form" action="{{route('destroy',$data->id)}}">
+                            @csrf                                
+                            @method('delete')
+                            <a class="btn btn-outline-secondary" type="button" href="{{ route('update', $data->id) }}" >Edit</a> 
+                            <button href="{{route('destroy',$data->id)}}" class="btn btn-danger" type="submit">Delete</button>
+                            
+                          </form>
+                        @endif
+                    </td>
                 </tr>
                 @endforeach
             </table>

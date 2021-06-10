@@ -44,26 +44,11 @@ class CreateAdminController extends Controller
         
     
         // Search in the title and body columns from the posts table
-        $staff = Http::get('https://mapi.iium.edu.my/staffdir/allstaff.php?staffname=' . $search)->json();
+        $staff = Http::get( env('MAP_IIUM_URL') . $search)->json();
         // dd($staff);
     
         // Return the search view with the resluts compacted
         return view('superadmin.stafflist', compact('staff'));
     }
 
-    public function showlist() {
-        
-            $staff = Http::get('https://mapi.iium.edu.my/staffdir/allstaff.php?staffname=adis')->json();
-            return view('superadmin.stafflist', [ 'staff' => $staff ]);
-        
-    }
-
-    public function findlist(Request $request) {
-        $q = $request->input( 'q' );
-        $user = Http::get('https://mapi.iium.edu.my/staffdir/allstaff.php?staffname=' . $name)->json();
-        if (count ( $user ) > 0)
-            return view ( 'superadmin.stafflist' )->withDetails ( $user )->withQuery ( $q );
-        else
-            return view ( 'superadmin.stafflist' )->withMessage ( 'No Details found. Try to search again !' );
-    }
 }

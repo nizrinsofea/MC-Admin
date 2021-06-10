@@ -42,11 +42,14 @@ class LoginController extends Controller
     public function redirectTo() {
         $role = Auth::user()->role; 
         switch ($role) {
+          case 'superadmin':
+            return '/home';
+            break;
           case 'admin':
             return '/admin';
             break;
           case 'lecturer':
-            return '/admin';
+            return '/lecturer';
             break; 
       
           default:

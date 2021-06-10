@@ -34,6 +34,9 @@ class RedirectIfAuthenticated
          $role = Auth::user()->role; 
      
          switch ($role) {
+            case 'superadmin':
+               return redirect('/home');
+               break;
            case 'admin':
               return redirect('/admin');
               break;

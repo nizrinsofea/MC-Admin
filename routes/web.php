@@ -21,7 +21,7 @@ Route::get('/home', function () {
     if (Auth::user()->role == 'admin')
         return redirect('/admin');
     elseif (Auth::user()->role == 'lecturer')
-        return redirect('/lecturer');
+        return redirect()->route('lecturer');
     else
         return redirect('/home');
 });
@@ -66,14 +66,18 @@ Route::middleware(['role:lecturer'])->group(function () {
 
     Route::get('/lecturer', [App\Http\Controllers\Lect\LectController::class, 'index'])->name('lecturer');
 
-    Route::get('/lecturer/submit', [App\Http\Controllers\Lect\LectController::class, 'submitProposal'])->name('submit');
-    Route::post('/lecturer/submit', [App\Http\Controllers\Lect\LectController::class, 'proposalLect']);
+    Route::get('/lecturer/submit', [App\Http\Controllers\Lect\ProposalController::class, 'index'])->name('submit');
+    Route::post('/lecturer/submit', [App\Http\Controllers\Lect\ProposalController::class, 'lectStore']);
+
+    // Route::get('/lecturer/submit', [App\Http\Controllers\Lect\LectController::class, 'submitProposal'])->name('submit');
+    // Route::post('/lecturer/submit', [App\Http\Controllers\Lect\LectController::class, 'proposalLect']);
 
     Route::get('/proposal', [App\Http\Controllers\Lect\ProposalController::class, 'index'])->name('proposals.index');
     
     Route::get('/lecturer/submitted', [App\Http\Controllers\Lect\SubmittedController::class, 'submitList'])->name('submitted');
     Route::get('/lecturer/submitted/{id}', [App\Http\Controllers\Lect\SubmittedController::class, 'submitDetails']);
     Route::post('/lecturer/submitted/{id}', [App\Http\Controllers\Lect\ProposalController::class, 'update'])->name('update');
+    Route::delete('/lecturer/submitted/{id}', [App\Http\Controllers\Lect\SubmittedController::class, 'destroy'])->name('destroy');
 });
 
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
